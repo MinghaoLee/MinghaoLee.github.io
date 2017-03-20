@@ -1,0 +1,805 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="django tutorial," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Environment
+Windows 7 x64 (workstation version)
+Python 3.5 (Anaconda 3)
+Git (Version 2.10.1.windows.1)
+
+Before startMake sure you have not used django in this PC before, otherwise you have to remove o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Project Using Django: Get Started">
+<meta property="og:url" content="http://minghaolee.github.io/2017/01/03/Web-Project-Using-Django-Get-Started/index.html">
+<meta property="og:site_name" content="Minghao.Li">
+<meta property="og:description" content="Environment
+Windows 7 x64 (workstation version)
+Python 3.5 (Anaconda 3)
+Git (Version 2.10.1.windows.1)
+
+Before startMake sure you have not used django in this PC before, otherwise you have to remove o">
+<meta property="og:updated_time" content="2017-03-16T05:20:19.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web Project Using Django: Get Started">
+<meta name="twitter:description" content="Environment
+Windows 7 x64 (workstation version)
+Python 3.5 (Anaconda 3)
+Git (Version 2.10.1.windows.1)
+
+Before startMake sure you have not used django in this PC before, otherwise you have to remove o">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://minghaolee.github.io/2017/01/03/Web-Project-Using-Django-Get-Started/"/>
+
+
+
+
+
+  <title> Web Project Using Django: Get Started | Minghao.Li </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90699000-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Minghao.Li</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://minghaolee.github.io/2017/01/03/Web-Project-Using-Django-Get-Started/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Minghao Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Minghao.Li">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web Project Using Django: Get Started
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T10:51:54+08:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Windows 7 x64 (workstation version)</li>
+<li>Python 3.5 (Anaconda 3)</li>
+<li>Git (Version 2.10.1.windows.1)</li>
+</ul>
+<h2 id="Before-start"><a href="#Before-start" class="headerlink" title="Before start"></a>Before start</h2><p>Make sure you have not used django in this PC before, otherwise you have to remove old version django before start. Then, you need to get these two things ready:</p>
+<ul>
+<li>pip</li>
+<li>psycopg2</li>
+</ul>
+<ol>
+<li><p>pip is already installed when you install python, but you need to upgrade it if you are not use the newest version of python, the reason is django can only be install by the newest pip tool,using command below to upgrade it.</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python -m pip install -U pip</div></pre></td></tr></table></figure>
+</li>
+<li><p>Psycopg2 is a postgreSQL adapter for Python, it seems like JDBC for java (like other ODBC adapters). you need to install it use command:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install psycopg2</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Install-Django"><a href="#Install-Django" class="headerlink" title="Install Django"></a>Install Django</h2><p>Run commands below on <em>git bash</em>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git clone git://github.com/django/django.git</div><div class="line">$ pip install -e django/</div></pre></td></tr></table></figure>
+<p>Note that you need to run these commands in the git bash instead of cmd, or you need to add git into environment variables so that you can use git in cmd</p>
+<h2 id="Install-PostgreSQL-on-Windows"><a href="#Install-PostgreSQL-on-Windows" class="headerlink" title="Install PostgreSQL on Windows"></a>Install PostgreSQL on Windows</h2><p>This step is easy, download the installer and install it.</p>
+<blockquote>
+<p>One thing you should know is the psql cmd can not use in the windows command prompt before you set the environment variables: add the bin file which include ‘psql.exe’ into the path var, for example: add ‘D:\softwares\PostgreSQL\9.5\bin’ into the system path.</p>
+</blockquote>
+<h2 id="Set-up-an-easy-django-project"><a href="#Set-up-an-easy-django-project" class="headerlink" title="Set up an easy django project"></a>Set up an easy django project</h2><p>One thing you need to know to get start with django is to read the <a href="https://docs.djangoproject.com/en/1.11/" target="_blank" rel="external">Official Documentation</a>, it is easy to understand and has a tutorial to help you set up a easy django website.</p>
+<h3 id="Creating-a-project"><a href="#Creating-a-project" class="headerlink" title="Creating a project"></a>Creating a project</h3><p>run command below in a directory you want to put your project in and it will initial a django project:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject mysite</div></pre></td></tr></table></figure>
+<p>As you can see, <code>mysite</code> is my project name, it depends on you. In the <code>mysite</code> directory you will see:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysite/</div><div class="line">	manage.py</div><div class="line">    mysite/</div><div class="line">        __init__.py</div><div class="line">        settings.py</div><div class="line">        urls.py</div><div class="line">        wsgi.py</div></pre></td></tr></table></figure>
+<p>these are the initial files to create a django webiste, you can find more explanations about them in the official doucumentation. In this time you don’t have to know what they means.</p>
+<h3 id="Run-a-server"><a href="#Run-a-server" class="headerlink" title="Run a server"></a>Run a server</h3><p>Run:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py runserver</div></pre></td></tr></table></figure>
+<p>to run a django server, and you will see:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Performing system checks...</div><div class="line"></div><div class="line">System check identified no issues (<span class="number">0</span> silenced).</div><div class="line"></div><div class="line">You have unapplied migrations; your app may <span class="keyword">not</span> work properly until they are applied.</div><div class="line">Run 'python manage.py migrate' to apply them.</div><div class="line"></div><div class="line">January <span class="number">02</span>, <span class="number">2017</span> - <span class="number">15</span>:<span class="number">50</span>:<span class="number">53</span></div><div class="line">Django version <span class="number">1</span>.<span class="number">10</span>, using settings 'mysite.settings'</div><div class="line">Starting development server <span class="built_in">at</span> http://<span class="number">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">8000</span>/</div><div class="line">Quit the server with CONTROL-C.</div></pre></td></tr></table></figure>
+<p>You can change the port and IP, if you want to show this web in your local area network, type this: <code>python manage.py runserver 0.0.0.0:5001</code> then other people could visit it by access your ip address and the port 5001, for example, if my ip address in LAN is 192.168.12.96, they can visit it typing <code>192.168.12.96:5001</code> in their broswer.</p>
+<h3 id="Setup-an-application-in-django-project"><a href="#Setup-an-application-in-django-project" class="headerlink" title="Setup an application in django project"></a>Setup an application in django project</h3><p>Now let us create an application named <strong>query</strong>  in django:<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py startapp query</div></pre></td></tr></table></figure></p>
+<p>this will create a folder named <strong>query</strong> in your project folder, and its directory is like:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">query/</div><div class="line">    __init__.py</div><div class="line">    admin.py</div><div class="line">    apps.py</div><div class="line">    migrations/</div><div class="line">        __init__.py</div><div class="line">    models.py</div><div class="line">    tests.py</div><div class="line">    views.py</div></pre></td></tr></table></figure></p>
+<h3 id="Activiting-your-app"><a href="#Activiting-your-app" class="headerlink" title="Activiting your app"></a>Activiting your app</h3><p>To include the app in our project, we need to add a reference to its configuration class in the INSTALLED_APPS setting. The <strong>QueryConfig</strong> class is in the query/apps.py file, so its dotted path is ‘query.apps.QueryConfig’. Edit the mysite/settings.py file and add that dotted path to the INSTALLED_APPS setting. It’ll look like this:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    <span class="string">'query.apps.QueryConfig'</span>,</div><div class="line">    <span class="string">'django.contrib.admin'</span>,</div><div class="line">    <span class="string">'django.contrib.auth'</span>,</div><div class="line">    <span class="string">'django.contrib.contenttypes'</span>,</div><div class="line">    <span class="string">'django.contrib.sessions'</span>,</div><div class="line">    <span class="string">'django.contrib.messages'</span>,</div><div class="line">    <span class="string">'django.contrib.staticfiles'</span>,</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>actually, you don’t have to do that, you just need to add <strong>query</strong> fiedl in INSTALLED_APPS, it also works:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    <span class="string">'query'</span>,</div><div class="line">    <span class="string">'django.contrib.admin'</span>,</div><div class="line">    <span class="string">'django.contrib.auth'</span>,</div><div class="line">    <span class="string">'django.contrib.contenttypes'</span>,</div><div class="line">    <span class="string">'django.contrib.sessions'</span>,</div><div class="line">    <span class="string">'django.contrib.messages'</span>,</div><div class="line">    <span class="string">'django.contrib.staticfiles'</span>,</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>then, run command:<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py makemigrations query</div></pre></td></tr></table></figure></p>
+<p>This command let django include your current installed apps. By running makemigrations, you’re telling Django that you’ve made some changes to your models (in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.</p>
+<p>Migrations are how Django stores changes to your models (and thus your database schema) - they’re just files on disk. You can read the migration for your new model if you like; it’s the file <code>query/migrations/0001_initial.py</code>.</p>
+<p>Then you can add features in your application, and for more information about how to setup a strong and robust app, visit <a href="https://docs.djangoproject.com/en/1.11/" target="_blank" rel="external">django’s official doc</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/django-tutorial/" rel="tag"># django tutorial</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/13/Web-Project-Using-Django-Connect-With-PostgreSQL/" rel="prev" title="Web Project Using Django: Connect With PostgreSQL">
+                Web Project Using Django: Connect With PostgreSQL <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/portrait.jpg"
+               alt="Minghao Li" />
+          <p class="site-author-name" itemprop="name">Minghao Li</p>
+           
+              <p class="site-description motion-element" itemprop="description">CS student@Qingdao</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minghaolee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.kaggle.com/minghaolee" target="_blank" title="Kaggle">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Kaggle
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://stackoverflow.com/users/7301209/minghao-lee" target="_blank" title="Stack Overflow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Stack Overflow
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment"><span class="nav-number">1.</span> <span class="nav-text">Environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-start"><span class="nav-number">2.</span> <span class="nav-text">Before start</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Django"><span class="nav-number">3.</span> <span class="nav-text">Install Django</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-PostgreSQL-on-Windows"><span class="nav-number">4.</span> <span class="nav-text">Install PostgreSQL on Windows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-up-an-easy-django-project"><span class="nav-number">5.</span> <span class="nav-text">Set up an easy django project</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-a-project"><span class="nav-number">5.1.</span> <span class="nav-text">Creating a project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-a-server"><span class="nav-number">5.2.</span> <span class="nav-text">Run a server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setup-an-application-in-django-project"><span class="nav-number">5.3.</span> <span class="nav-text">Setup an application in django project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activiting-your-app"><span class="nav-number">5.4.</span> <span class="nav-text">Activiting your app</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minghao Li</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

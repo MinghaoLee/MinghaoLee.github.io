@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="django tutorial," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Django could interact with mulitple databases such as MySQL, SQLite(default), PostgreSQL… Take PostgreSQL as an example, I will show you how django connect with database.
+Psycopg2Psycopg is a PostgreS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Project Using Django: Connect With PostgreSQL">
+<meta property="og:url" content="http://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-Connect-With-PostgreSQL/index.html">
+<meta property="og:site_name" content="Minghao.Li">
+<meta property="og:description" content="Django could interact with mulitple databases such as MySQL, SQLite(default), PostgreSQL… Take PostgreSQL as an example, I will show you how django connect with database.
+Psycopg2Psycopg is a PostgreS">
+<meta property="og:updated_time" content="2017-03-16T05:25:08.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web Project Using Django: Connect With PostgreSQL">
+<meta name="twitter:description" content="Django could interact with mulitple databases such as MySQL, SQLite(default), PostgreSQL… Take PostgreSQL as an example, I will show you how django connect with database.
+Psycopg2Psycopg is a PostgreS">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-Connect-With-PostgreSQL/"/>
+
+
+
+
+
+  <title> Web Project Using Django: Connect With PostgreSQL | Minghao.Li </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90699000-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Minghao.Li</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-Connect-With-PostgreSQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Minghao Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Minghao.Li">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web Project Using Django: Connect With PostgreSQL
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-13T14:50:54+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Django could interact with mulitple databases such as MySQL, SQLite(default), PostgreSQL… Take PostgreSQL as an example, I will show you how django connect with database.</p>
+<h2 id="Psycopg2"><a href="#Psycopg2" class="headerlink" title="Psycopg2"></a>Psycopg2</h2><p>Psycopg is a PostgreSQL adapter for the Python programming language. It is a wrapper for the libpq, the official PostgreSQL client library. Psycopg2 is a adapter written in C, in the first article I have shown you how to install it:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install psycopg2</div></pre></td></tr></table></figure></p>
+<p>After installation, you just import this package in your python file, but in django, it has no need to do that.</p>
+<h2 id="Django-Database-Connection"><a href="#Django-Database-Connection" class="headerlink" title="Django Database Connection"></a>Django Database Connection</h2><p>Open <code>settings.py</code>, it’s a normal Python module with module-level variables representing Django settings. Find field <strong>DATABASE</strong>, configuration in django about postgreSQL is below:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">DATABASES = &#123;</div><div class="line">    <span class="string">'default'</span>: &#123;</div><div class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.postgresql_psycopg2'</span>,</div><div class="line">        <span class="string">'NAME'</span>: <span class="string">'testdb'</span>,</div><div class="line">		<span class="string">'USER'</span>: <span class="string">'postgres'</span>,</div><div class="line">		<span class="string">'PASSWORD'</span>: <span class="string">'applysquare'</span>,</div><div class="line">		<span class="string">'HOST'</span>: <span class="string">'127.0.0.1'</span>,</div><div class="line">		<span class="string">'PORT'</span>: <span class="string">'5432'</span>,</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>NAME is your database name, ENGINE is your database type, like <strong>‘django.db.backends.sqlite3’, ‘django.db.backends.postgresql’, ‘django.db.backends.mysql’, or ‘django.db.backends.oracle’</strong>, others can see <a href="https://docs.djangoproject.com/en/1.11/ref/databases/#third-party-notes" target="_blank" rel="external">this</a>.</p>
+<p>When you change the file <code>settings.py</code>, remember run the command:<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py migrate</div></pre></td></tr></table></figure></p>
+<p>The migrate command creates any necessary database tables according to the database settings in your <code>mysite/settings.py</code> file and the database migrations shipped with the app (we’ll cover those later).</p>
+<h2 id="Creating-models"><a href="#Creating-models" class="headerlink" title="Creating models"></a>Creating models</h2><p>A model is the single, definitive source of information about your data. It contains the essential fields and behaviors of the data you’re storing. Generally, each model maps to a single database table.</p>
+<h3 id="create-models-match-to-database"><a href="#create-models-match-to-database" class="headerlink" title="create models match to database"></a>create models match to database</h3><p>In my case, I need to read data from database, so I have to create models that match to database’s table structure and I do not need to create my own models.</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py makemigrations query</div></pre></td></tr></table></figure>
+<p>Run the command above and it will create models.py automatically, and you could see creation information in the terminal at the same time.</p>
+<h3 id="create-your-own-models"><a href="#create-your-own-models" class="headerlink" title="create your own models"></a>create your own models</h3><p>Take official tutorial as an example:</p>
+<p>In our simple poll app, we’ll create two models: Question and Choice. A Question has a question and a publication date. A Choice has two fields: the text of the choice and a vote tally. Each Choice is associated with a Question.<br>These concepts are represented by simple Python classes. Edit the polls/models.py file so it looks like this:</p>
+<p>file: polls/models.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Question</span><span class="params">(models.Model)</span>:</span></div><div class="line">    question_text = models.CharField(max_length=<span class="number">200</span>)</div><div class="line">    pub_date = models.DateTimeField(<span class="string">'date published'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Choice</span><span class="params">(models.Model)</span>:</span></div><div class="line">    question = models.ForeignKey(Question, on_delete=models.CASCADE)</div><div class="line">    choice_text = models.CharField(max_length=<span class="number">200</span>)</div><div class="line">    votes = models.IntegerField(default=<span class="number">0</span>)</div></pre></td></tr></table></figure></p>
+<p>The code is straightforward. Each model is represented by a class that subclasses <strong>django.db.models.Model</strong>. Each model has a number of class variables, each of which represents a database field in the model.</p>
+<p>Each field is represented by an instance of a <strong>Field</strong> class – e.g., <strong>CharField</strong> for character fields and <strong>DateTimeField</strong> for datetimes. This tells Django what type of data each field holds.</p>
+<p>The name of each Field instance (e.g. question_text or pub_date) is the field’s name, in machine-friendly format. You’ll use this value in your Python code, and your database will use it as the column name.</p>
+<p>Then run command:<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py migrate</div></pre></td></tr></table></figure></p>
+<p>The migrate command looks at the INSTALLED_APPS setting and creates any necessary database tables according to the database settings in your mysite/settings.py file and the database migrations shipped with the app.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
+<p><a href="https://docs.djangoproject.com/en/1.11/" target="_blank" rel="external">Django Offical Documentation ver 1.11</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/django-tutorial/" rel="tag"># django tutorial</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/03/Web-Project-Using-Django-Get-Started/" rel="next" title="Web Project Using Django: Get Started">
+                <i class="fa fa-chevron-left"></i> Web Project Using Django: Get Started
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/13/Web-Project-Using-Django-MTV-Pattern/" rel="prev" title="Web Project Using Django: MTV Pattern">
+                Web Project Using Django: MTV Pattern <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/portrait.jpg"
+               alt="Minghao Li" />
+          <p class="site-author-name" itemprop="name">Minghao Li</p>
+           
+              <p class="site-description motion-element" itemprop="description">CS student@Qingdao</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minghaolee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.kaggle.com/minghaolee" target="_blank" title="Kaggle">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Kaggle
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://stackoverflow.com/users/7301209/minghao-lee" target="_blank" title="Stack Overflow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Stack Overflow
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Psycopg2"><span class="nav-number">1.</span> <span class="nav-text">Psycopg2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-Database-Connection"><span class="nav-number">2.</span> <span class="nav-text">Django Database Connection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-models"><span class="nav-number">3.</span> <span class="nav-text">Creating models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create-models-match-to-database"><span class="nav-number">3.1.</span> <span class="nav-text">create models match to database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#create-your-own-models"><span class="nav-number">3.2.</span> <span class="nav-text">create your own models</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minghao Li</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

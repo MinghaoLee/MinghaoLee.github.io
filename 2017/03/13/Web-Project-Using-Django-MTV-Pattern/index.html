@@ -1,0 +1,823 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="django tutorial," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="MVC PatternIn most web development project, MVC, which means Model, View, Controller, has been the most popular and efficient develop pattern nowdays, its main idea just like this:
+
+from Wikipedia:
+
+M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Project Using Django: MTV Pattern">
+<meta property="og:url" content="http://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-MTV-Pattern/index.html">
+<meta property="og:site_name" content="Minghao.Li">
+<meta property="og:description" content="MVC PatternIn most web development project, MVC, which means Model, View, Controller, has been the most popular and efficient develop pattern nowdays, its main idea just like this:
+
+from Wikipedia:
+
+M">
+<meta property="og:image" content="http://minghaolee.github.io/images/2017/3/MVC.png">
+<meta property="og:image" content="http://minghaolee.github.io/images/2017/3/MTV.jpg">
+<meta property="og:image" content="http://minghaolee.github.io/images/2017/3/diff.png">
+<meta property="og:updated_time" content="2017-03-16T05:27:07.431Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web Project Using Django: MTV Pattern">
+<meta name="twitter:description" content="MVC PatternIn most web development project, MVC, which means Model, View, Controller, has been the most popular and efficient develop pattern nowdays, its main idea just like this:
+
+from Wikipedia:
+
+M">
+<meta name="twitter:image" content="http://minghaolee.github.io/images/2017/3/MVC.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-MTV-Pattern/"/>
+
+
+
+
+
+  <title> Web Project Using Django: MTV Pattern | Minghao.Li </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90699000-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Minghao.Li</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-MTV-Pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Minghao Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Minghao.Li">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web Project Using Django: MTV Pattern
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-13T15:48:54+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="MVC-Pattern"><a href="#MVC-Pattern" class="headerlink" title="MVC Pattern"></a>MVC Pattern</h2><p>In most web development project, MVC, which means Model, View, Controller, has been the most popular and efficient develop pattern nowdays, its main idea just like this:</p>
+<p><img src="/images/2017/3/MVC.png" alt=""></p>
+<p>from Wikipedia:</p>
+<blockquote>
+<p>Model–View–Controller (MVC) is an software architectural pattern for implementing user interfaces on computers. It divides a given application into three interconnected parts in order to separate internal representations of information from the ways that information is presented to and accepted from the user.[1][2] The MVC design pattern decouples these major components allowing for efficient code reuse and parallel development.</p>
+</blockquote>
+<p>In a word, this pattern let people able to write codes in three different parts: Model, View, Controller independedly. For example, in Model part, you just need to consider how to design database, how to manage data or how to implement the features and algorithms that your project back end need. You don’t have to consider how the data showed in front end, how to handling request or post.</p>
+<h2 id="MTV-Pattern"><a href="#MTV-Pattern" class="headerlink" title="MTV Pattern"></a>MTV Pattern</h2><p>MTV(Model-Template-View) pattern is one pattern similar with MVC but have some little and tricky changes that are better match to Django web development. The Django team said:</p>
+<blockquote>
+<p>In our interpretation of MVC, the “view” describes the data that gets presented to the user. It’s not necessarily how the data looks, but which data is presented. The view describes which data you see, not how you see it. It’s a subtle distinction.</p>
+</blockquote>
+<p>MTV pattern divides development works into three parts:</p>
+<ul>
+<li>Model: connect project with database, probably like a <strong>Object/Relation Mapping</strong>(ORM)</li>
+<li>Template: show data to users, usually by html pages or somethings like that.</li>
+<li>View: finish the project logic part, and maybe call Model and Template sometimes by <strong>URL</strong> mapping.</li>
+</ul>
+<p>Its mechanism is:<br><img src="/images/2017/3/MTV.jpg" alt=""></p>
+<h3 id="What’s-the-difference-between-MVC-and-MTV"><a href="#What’s-the-difference-between-MVC-and-MTV" class="headerlink" title="What’s the difference between MVC and MTV?"></a>What’s the difference between MVC and MTV?</h3><p>Well, both MTV and MVC pattern are aimed to make the development more efficient and more decoupling, but there are some differences:</p>
+<p><img src="/images/2017/3/diff.png" alt=""></p>
+<h2 id="Django-MTV-Example"><a href="#Django-MTV-Example" class="headerlink" title="Django MTV Example"></a>Django MTV Example</h2><p>In my project I have to show data reading from postgresql database to users on web pages, what I need to do is below. (Before that, consuming postgresql has connected with django, <a href="https://minghaolee.github.io/2017/03/13/Web-Project-Using-Django-Connect-With-PostgreSQL/">this article</a> will introduce the details about the connection between django and database)</p>
+<h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p>So, in the case of my postgresql already has data table, I have to create models matched to these tables, which means I have to <strong>integrating Django with a legacy database</strong> by auto-generate the models.</p>
+<p>Use command with Unix standard output redirection:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py inspectdb &gt; query/models.py</div></pre></td></tr></table></figure>
+<p>and your models.py was auto writed with coincide models with database tables, you can use these models to query data from database tables.</p>
+<h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>Django has the concept of “views” to encapsulate the logic responsible for processing a user’s request and for returning the response.</p>
+<p>In my case, I have to write a function to read data from database and pack them to font end pages. So I wrote a function in <code>views.py</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</div><div class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Test</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(request)</span>:</span></div><div class="line">    text = Test.objects.all()</div><div class="line">    context = &#123;<span class="string">'text'</span>: text&#125;</div><div class="line">    <span class="keyword">return</span> render(request, <span class="string">'query/index'</span>, context)</div></pre></td></tr></table></figure>
+<p>Wire these new views into the query.urls module by adding the following url() calls</p>
+<h4 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h4><p>What url does, in my opinion, is to tell django the right path to execute views function and the right address to show data in font end. To design URLs for an app, you create a Python module informally called a URLconf (URL configuration). This module is pure Python code and is a simple mapping between URL patterns (simple regular expressions) to Python functions (your views).</p>
+<p>In my example, create a file named <code>urls.py</code> in query folder, and write this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</div><div class="line"></div><div class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</div><div class="line"></div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    url(<span class="string">r'^show/$'</span>, views.show, name = <span class="string">'show'</span>),</div><div class="line"></div><div class="line">]</div></pre></td></tr></table></figure>
+<p>and remember add redirection codes in your project url file <code>urls.py</code>:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</div><div class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    url(<span class="string">r'^admin/'</span>, admin.site.urls),</div><div class="line">    url(<span class="string">r'^query/'</span>, include(<span class="string">'query.urls'</span>)),</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>project url file is in folder named as your project name, like <code>mysite/urls.py</code> in mine, and your app url file is <code>query/urls.py</code>.</p>
+<p>the url above means when we visit the <code>query/show</code> path, execute views.show function, the path in your local PC may be <code>locahost:8000/query/show</code>.</p>
+<h3 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h3><blockquote>
+<p>Being a web framework, Django needs a convenient way to generate HTML dynamically. The most common approach relies on templates. A template contains the static parts of the desired HTML output as well as some special syntax describing how dynamic content will be inserted.</p>
+</blockquote>
+<p>You almost finished now, but you need to add template page to show data.</p>
+<ol>
+<li><p>create folder named <code>templates</code> in your app folder, and create a app templates folder like:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">query/</div><div class="line">    templates/</div><div class="line">              query/</div></pre></td></tr></table></figure>
+</li>
+<li><p>create an html file in this folder, better named as <code>show.html</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">query/</div><div class="line">    templates/</div><div class="line">              query/</div><div class="line">                    show.html</div></pre></td></tr></table></figure>
+</li>
+<li><p>edit this html file in django’s rule: <code>A template is simply a text file. It can generate any text-based format (HTML, XML, CSV, etc.)</code>.In this case, just write this in your <code>show.html</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">for</span> obj <span class="keyword">in</span> text %&#125;</div><div class="line">&#123;&#123; obj.txt &#125;&#125;</div><div class="line">&#123;% endfor %&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Finally, run your django server, and visit <code>locahost:8000/query/show</code>, your data read from database will display on your web browser.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller#Use_in_web_applications" target="_blank" rel="external">Model–view–controller, Wikipedia</a></p>
+<p><a href="http://blog.csdn.net/dbanote/article/details/11338953" target="_blank" rel="external">Django实战 第2篇 - 关于MTV模式</a></p>
+<p><a href="http://mropengate.blogspot.com/2015/08/mvcdjangomtv.html" target="_blank" rel="external">MVC架構模式、Django的MTV模式 介紹與比較</a></p>
+<p><a href="https://docs.djangoproject.com/en/1.11/" target="_blank" rel="external">Django Official Documentation</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/django-tutorial/" rel="tag"># django tutorial</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/Web-Project-Using-Django-Connect-With-PostgreSQL/" rel="next" title="Web Project Using Django: Connect With PostgreSQL">
+                <i class="fa fa-chevron-left"></i> Web Project Using Django: Connect With PostgreSQL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/14/Web-Project-Using-Django-Using-Filters/" rel="prev" title="Web Project Using Django: Using Filters">
+                Web Project Using Django: Using Filters <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/portrait.jpg"
+               alt="Minghao Li" />
+          <p class="site-author-name" itemprop="name">Minghao Li</p>
+           
+              <p class="site-description motion-element" itemprop="description">CS student@Qingdao</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minghaolee" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.kaggle.com/minghaolee" target="_blank" title="Kaggle">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Kaggle
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://stackoverflow.com/users/7301209/minghao-lee" target="_blank" title="Stack Overflow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Stack Overflow
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC-Pattern"><span class="nav-number">1.</span> <span class="nav-text">MVC Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MTV-Pattern"><span class="nav-number">2.</span> <span class="nav-text">MTV Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What’s-the-difference-between-MVC-and-MTV"><span class="nav-number">2.1.</span> <span class="nav-text">What’s the difference between MVC and MTV?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-MTV-Example"><span class="nav-number">3.</span> <span class="nav-text">Django MTV Example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Model"><span class="nav-number">3.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View"><span class="nav-number">3.2.</span> <span class="nav-text">View</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#URL"><span class="nav-number">3.2.1.</span> <span class="nav-text">URL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Template"><span class="nav-number">3.3.</span> <span class="nav-text">Template</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minghao Li</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
